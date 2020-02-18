@@ -1,6 +1,7 @@
 import hashlib
 import time
 
+ja = ()
 all_possibilities = ["U", "U", "U", "d", "d", "d", "d"]
 hashed_string = ()
 lowerCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
