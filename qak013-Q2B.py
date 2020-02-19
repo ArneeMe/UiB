@@ -1,7 +1,6 @@
 import hashlib
 import time
 
-ja = ()
 all_possibilities = ["U", "U", "U", "d", "d", "d", "d"]
 hashed_string = ()
 lowerCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -16,7 +15,6 @@ def secure_this_password(password):  # Hashes the password which we are going to
 
 secure_this_password("ABC1234")  # User inputs password
 
-
 def check_hash():  # Function that checks if the hashed random word equals the hash of the password
     global hashed_string, end
     string = "".join(all_possibilities)  # Makes the array of letters and digits into one string
@@ -26,6 +24,7 @@ def check_hash():  # Function that checks if the hashed random word equals the h
         print("Great, you've found the password! It is: " + string)  # If it is the same print out and exit the script
         print(round(total_time, 2))
         exit()
+
 
 
 start = time.time()  # Timer
