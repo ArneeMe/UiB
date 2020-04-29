@@ -6,6 +6,11 @@ counter = 0
 binaryDecryptedHTML = ""
 
 
+def rc4(text, key):
+    zipped = zip(text, key)  # Zip forces text and key to be "combined"
+    xor = [a ^ b for a, b in zipped]  # XOR command while looping trough the ZIP
+    return bytes(xor)  # Returns the byte version of the function
+
 def findPublickKey_B():
     global publicKey_B
     publicKey_B = (publicGenerator ** secretKey_B) % publicPrime
@@ -20,22 +25,23 @@ findPublickKey_A()
 findPublickKey_B()
 
 sharedKey_2 = (publicKey_A**secretKey_B) % publicPrime
-encryptedKey = hashlib.sha256(str(sharedKey_2).encode()).hexdigest()
-binaryEncryptedKey = ''.join(format(ord(x), 'b') for x in encryptedKey)
-binaryEncryptedKeyCorrectLength = 1000 * binaryEncryptedKey
+print("The shared key is = " + str(sharedKey_2))
+sharedKey_2SHA = hashlib.sha256(str(sharedKey_2).encode()).hexdigest()
+print("The SHA256 of the shared key is = " + sharedKey_2SHA)
+byteSharedKey = str(sharedKey_2SHA).encode()
+byteSharedKeyLength = byteSharedKey*100
 
+txt = open("Ciphertext-Q3.txt", "r")
+hexFile = ""
+for x in txt:
+    hexFile += x
+txt.close()
 
-encryptedFile = open("Ciphertext-Q3.txt", "r")
-for x in encryptedFile.read():
-    if x == binaryEncryptedKeyCorrectLength[counter]:
-        binaryVariable = 0
-    else:
-        binaryVariable = 1
-    binaryDecryptedHTML = binaryDecryptedHTML + str(binaryVariable)
-    counter += 1
+encryptedBytes2 = bytes.fromhex(hexFile)
+textBytes2 = rc4(encryptedBytes2, byteSharedKeyLength)
+plainText2 = textBytes2.decode()
 
+index1 = open("index1.html", "w")
+index1.write(plainText2)
+index1.close()
 
-# Here should you convert binary back to normal text and you will receive the original answer.
-
-
-print("The shared secret key is = " + str(sharedKey_2) + ". The SHA256 value of this is = " + str(encryptedKey))
